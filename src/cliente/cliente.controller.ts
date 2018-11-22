@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body, Put, Delete, Req, UseGuards, UseFilters } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete, Req, UseGuards, UseFilters, UseInterceptors } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 
 import { CreateClienteDto } from './dto/create-cliente.dto';
@@ -9,10 +9,12 @@ import { ParseIntPipe } from 'src/pipe/parse-int.pipe';
 import { RoleGuard } from 'src/guard/role.guard';
 import { Role } from 'src/decorator/role.decorator';
 import { HttpExceptionFilter } from 'src/filter/http-exception.filter';
+import { LoggingInterceptor } from 'src/interceptor/logging.interceptor';
 
 @Controller('cliente')
 @UseFilters(HttpExceptionFilter)
 @UseGuards(RoleGuard)
+@UseInterceptors(LoggingInterceptor)
 export class ClienteController {
 
     constructor(
